@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
+
 
 config();
 
@@ -19,27 +20,48 @@ const rest = new REST({ version: '10' }).setToken(TOKEN)
 
 
 client.login(TOKEN);
- 
+
 client.on('ready', () => {
     console.log(`${client.user.tag} log in!`);
 });
 
 client.on('interactionCreate', (interaction) => {
-    if (interaction.commandName === 'cring') {
-        console.log('hello');
-        interaction.reply({content: 'hellooo'});
+    if (interaction.isChatInputCommand()) {
+        console.log(interaction.options.get('reason').value);
+        interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
     }
 });
 
 async function main() {
+
     const commands = [
         {
-            name: 'ping',
-            description: 'Replies with Pong!',
-        },
-        {
-            name: 'cring',
-            description: 'Replies with Aboba!',
+            name: 'wavn',
+            description: 'get warn to user',
+            options: [
+                {
+                    name: 'reason',
+                    description: 'reason for warn',
+                    type: 3,
+                    required: true,
+                    choices: [
+                        {
+                            name: 'cringe',
+                            value: '1',
+                        },
+                        {
+                            name: 'aboba',
+                            value: '2',
+                        },
+                    ],
+                },
+                {
+                    name: 'time',
+                    description: 'time',
+                    type: 3,
+                    required: true,
+                },
+            ],
         },
     ];
     try {
