@@ -1,8 +1,9 @@
 import { config } from 'dotenv';
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
 import warnCommand from './commands/warn.js';
-import rolesCommand from './commands/roles.js'
-import usersCommand from './commands/user.js'
+import rolesCommand from './commands/roles.js';
+import usersCommand from './commands/user.js';
+import channelsCommand from './commands/channel.js';
 
 
 config();
@@ -40,13 +41,21 @@ client.on('interactionCreate', (interaction) => {
         case 'users':
             interaction.reply({ content: `призываю ${interaction.options.get('user').user.username}` });
             break;
+        case 'channels':
+            interaction.reply({ content: `призываю канал ${interaction.options.get('channel').channel.name}` });
+            break;
         default:
             break;
     }
 });
 
 async function main() {
-    const commands = [warnCommand, rolesCommand, usersCommand];
+    const commands = [
+        warnCommand,
+        rolesCommand,
+        usersCommand,
+        channelsCommand
+    ];
     try {
         console.log('Started refreshing application (/) commands.');
         Routes.applicationGuildCommand()
