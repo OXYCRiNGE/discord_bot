@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
-import warnCommand from './commands/warn.js'
+import warnCommand from './commands/warn.js';
+import rolesCommand from './commands/roles.js'
 
 
 config();
@@ -27,14 +28,21 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', (interaction) => {
-    if (interaction.isChatInputCommand()) {
-        console.log(interaction.options.get('reason').value);
-        interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
+    const slash = interaction.commandName;
+    switch (slash) {
+        case 'warn':
+            interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
+            break;
+        case 'addrole':
+            interaction.reply({content: `ок`});
+            break
+        default:
+            break;
     }
 });
 
 async function main() {
-    const commands = [warnCommand];
+    const commands = [warnCommand, rolesCommand];
     try {
         console.log('Started refreshing application (/) commands.');
         Routes.applicationGuildCommand()
