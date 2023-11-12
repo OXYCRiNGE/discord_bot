@@ -1,6 +1,6 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
-export const warnCommand = new SlashCommandBuilder()
+const warnCommand = new SlashCommandBuilder()
     .setName('warn')
     .setDescription('выдать варн')
     .addStringOption((option) =>
@@ -19,4 +19,4 @@ export const warnCommand = new SlashCommandBuilder()
             .setDescription('время варна')
             .setRequired(true));
 
-warnCommand.toJSON()
+export default warnCommand.toJSON();

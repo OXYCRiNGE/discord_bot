@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
-import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
-import { warnCommand } from '../src/commands/warn.js'
+import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
+import warnCommand from './commands/warn.js'
 
 
 config();
