@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
 import warnCommand from './commands/warn.js';
 import rolesCommand from './commands/roles.js'
+import usersCommand from './commands/user.js'
 
 
 config();
@@ -34,15 +35,18 @@ client.on('interactionCreate', (interaction) => {
             interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
             break;
         case 'addrole':
-            interaction.reply({content: `ок`});
-            break
+            interaction.reply({ content: `ок` });
+            break;
+        case 'users':
+            interaction.reply({ content: `призываю ${interaction.options.get('user').user.username}` });
+            break;
         default:
             break;
     }
 });
 
 async function main() {
-    const commands = [warnCommand, rolesCommand];
+    const commands = [warnCommand, rolesCommand, usersCommand];
     try {
         console.log('Started refreshing application (/) commands.');
         Routes.applicationGuildCommand()
