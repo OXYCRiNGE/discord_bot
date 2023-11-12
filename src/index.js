@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
+import { warnCommand } from '../src/commands/warn.js'
 
 
 config();
@@ -33,37 +34,7 @@ client.on('interactionCreate', (interaction) => {
 });
 
 async function main() {
-
-    const commands = [
-        {
-            name: 'wavn',
-            description: 'get warn to user',
-            options: [
-                {
-                    name: 'reason',
-                    description: 'reason for warn',
-                    type: 3,
-                    required: true,
-                    choices: [
-                        {
-                            name: 'cringe',
-                            value: '1',
-                        },
-                        {
-                            name: 'aboba',
-                            value: '2',
-                        },
-                    ],
-                },
-                {
-                    name: 'time',
-                    description: 'time',
-                    type: 3,
-                    required: true,
-                },
-            ],
-        },
-    ];
+    const commands = [warnCommand];
     try {
         console.log('Started refreshing application (/) commands.');
         Routes.applicationGuildCommand()
