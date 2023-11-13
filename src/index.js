@@ -4,6 +4,7 @@ import warnCommand from './commands/warn.js';
 import rolesCommand from './commands/roles.js';
 import usersCommand from './commands/user.js';
 import channelsCommand from './commands/channel.js';
+import banCommand from './commands/ban.js';
 
 
 config();
@@ -54,7 +55,8 @@ async function main() {
         warnCommand,
         rolesCommand,
         usersCommand,
-        channelsCommand
+        channelsCommand,
+        banCommand
     ];
     try {
         console.log('Started refreshing application (/) commands.');
