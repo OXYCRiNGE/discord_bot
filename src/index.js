@@ -31,22 +31,24 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', (interaction) => {
-    const slash = interaction.commandName;
-    switch (slash) {
-        case 'warn':
-            interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
-            break;
-        case 'addrole':
-            interaction.reply({ content: `ок` });
-            break;
-        case 'users':
-            interaction.reply({ content: `призываю ${interaction.options.get('user').user.username}` });
-            break;
-        case 'channels':
-            interaction.reply({ content: `призываю канал ${interaction.options.get('channel').channel.name}` });
-            break;
-        default:
-            break;
+    if (interaction.isChatInputCommand()){
+        const slash = interaction.commandName;
+        switch (slash) {
+            case 'warn':
+                interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
+                break;
+            case 'addrole':
+                interaction.reply({ content: `ок` });
+                break;
+            case 'users':
+                interaction.reply({ content: `призываю ${interaction.options.get('user').user.username}` });
+                break;
+            case 'channels':
+                interaction.reply({ content: `призываю канал ${interaction.options.get('channel').channel.name}` });
+                break;
+            default:
+                break;
+        }
     }
 });
 
