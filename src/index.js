@@ -1,10 +1,12 @@
+import { Client, GatewayIntentBits, REST, Routes, TextInputStyle } from 'discord.js';
 import { config } from 'dotenv';
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
-import warnCommand from './commands/warn.js';
+import banCommand from './commands/ban.js';
+import channelsCommand from './commands/channel.js';
+import modalCommand from './commands/modal.js';
 import rolesCommand from './commands/roles.js';
 import usersCommand from './commands/user.js';
-import channelsCommand from './commands/channel.js';
-import banCommand from './commands/ban.js';
+import warnCommand from './commands/warn.js';
+import { ActionRowBuilder, ModalBuilder, TextInputBuilder } from '@discordjs/builders';
 
 
 config();
@@ -31,7 +33,7 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', (interaction) => {
-    if (interaction.isChatInputCommand()){
+    if (interaction.isChatInputCommand()) {
         const slash = interaction.commandName;
         switch (slash) {
             case 'warn':
@@ -46,6 +48,26 @@ client.on('interactionCreate', (interaction) => {
             case 'channels':
                 interaction.reply({ content: `призываю канал ${interaction.options.get('channel').channel.name}` });
                 break;
+            case 'modal':
+                const modal = new ModalBuilder()
+                    .setTitle('Test title')
+                    .setCustomId('show modal')
+                    .setComponents(
+                        new ActionRowBuilder().setComponents(
+                            new TextInputBuilder()
+                                .setLabel('text')
+                                .setCustomId('text')
+                                .setStyle(TextInputStyle.Short)
+                        ),
+                        new ActionRowBuilder().setComponents(
+                            new TextInputBuilder()
+                                .setLabel('text_text')
+                                .setCustomId('text_text')
+                                .setStyle(TextInputStyle.Paragraph)
+                        )
+                    );
+                interaction.showModal(modal)
+                break;
             default:
                 break;
         }
@@ -58,7 +80,8 @@ async function main() {
         rolesCommand,
         usersCommand,
         channelsCommand,
-        banCommand
+        banCommand,
+        modalCommand
     ];
     try {
         console.log('Started refreshing application (/) commands.');
