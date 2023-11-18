@@ -6,7 +6,7 @@ import modalCommand from './commands/modal.js';
 import rolesCommand from './commands/roles.js';
 import usersCommand from './commands/user.js';
 import warnCommand from './commands/warn.js';
-import { ActionRowBuilder, ModalBuilder, TextInputBuilder } from '@discordjs/builders';
+import { ActionRowBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } from '@discordjs/builders';
 
 
 config();
@@ -37,7 +37,10 @@ client.on('interactionCreate', (interaction) => {
         const slash = interaction.commandName;
         switch (slash) {
             case 'warn':
-                interaction.reply({ content: `пред по четкой причине ${interaction.options.get('reason').value} на ${interaction.options.get('time').value} минут` });
+                const warnEmbed = new EmbedBuilder()
+                    .setColor(16121600)
+                    .setDescription(`Пользователь  **<@!${interaction.options.get('user').user.id}>** получает варн на **${interaction.options.get('time').value}** минут по причине **${interaction.options.get('reason').value}**`)
+                interaction.reply({ embeds: [warnEmbed] });
                 break;
             case 'addrole':
                 interaction.reply({ content: `ок` });

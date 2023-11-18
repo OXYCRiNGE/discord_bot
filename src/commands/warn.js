@@ -3,6 +3,12 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 const warnCommand = new SlashCommandBuilder()
     .setName('warn')
     .setDescription('выдать варн')
+    .addUserOption((option) =>
+        option
+            .setName('user')
+            .setDescription('юзер')
+            .setRequired(true)
+    )
     .addStringOption((option) =>
         option
             .setName('reason')
